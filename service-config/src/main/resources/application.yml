@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: config
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${GIT_CONFIG_URL}
+
+server:
+  port: 8000
+
+security:
+  user:
+    password: ${CONFIG_SERVICE_PASSWORD}
