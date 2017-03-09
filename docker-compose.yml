@@ -1,11 +1,15 @@
 version: '3'
+
 services:
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       GIT_CONFIG_URL: $GIT_CONFIG_URL
+      JAVA_OPTS: $JAVA_OPTS
     image: sace/service-config
     restart: always
+    ports:
+      - '8081:8000'
     logging:
       options:
         max-size: "10m"
@@ -16,21 +20,38 @@ services:
       timeout: 10s
       retries: 3
       
-  registry:
-    environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: sace/service-discovery
-    restart: always
-    ports:
-      - 8761:8000
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://registry:8000"]
-      interval: 1m30s
-      timeout: 10s
-      retries: 3
-    depends_on:
-      - config
+  # registry:
+    # environment:
+      # CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    # image: sace/service-discovery
+    # restart: always
+    # logging:
+      # options:
+        # max-size: "10m"
+        # max-file: "10"
+    # healthcheck:
+      # test: ["CMD", "curl", "-f", "http://registry:8000"]
+      # interval: 1m30s
+      # timeout: 10s
+      # retries: 3
+    # depends_on:
+      # - config
+      
+  # gateway:
+    # environment:
+      # CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    # image: sace/service-gateway
+    # restart: always
+    # ports:
+      # - 8080:8000
+    # logging:
+      # options:
+        # max-size: "10m"
+        # max-file: "10"
+    # healthcheck:
+      # test: ["CMD", "curl", "-f", "http://gateway:8000"]
+      # interval: 1m30s
+      # timeout: 10s
+      # retries: 3
+    # depends_on:
+      # - config

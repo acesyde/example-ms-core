@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  service-weather:
+    image: sace/service-weather
+    build:
+      context: ./service-weather
+      dockerfile: Dockerfile
